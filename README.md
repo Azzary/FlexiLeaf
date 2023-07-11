@@ -60,3 +60,7 @@ FlexiLeaf offre un ensemble de fonctionnalités puissantes qui vous permettent de
 
 FlexiLeaf est en constante évolution, avec de nouvelles fonctionnalités ajoutées.
 
+## Clause de non-responsabilité
+
+Veuillez noter que l'utilisation de ce logiciel est à vos propres risques. L'auteur ne peut être tenu responsable des dommages ou préjudices découlant de l'utilisation de ce logiciel. Bien que tous les efforts aient été faits pour garantir la fiabilité et l'exactitude de ce logiciel, l'auteur ne fait aucune déclaration ni garantie quant à son utilité ou son adéquation à un usage particulier.
+Il est recommandé d'utiliser ce logiciel conformément aux lois en vigueur et de respecter les droits d'autrui. L'auteur décline toute responsabilité pour toute utilisation abusive, illégale ou non autorisée de ce logiciel.
