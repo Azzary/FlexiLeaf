@@ -11,10 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlexiLeaf.StealthRunner", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Éléments de solution", "Éléments de solution", "{3D8D79B6-CC4C-4ED8-AF96-D54CB6296D34}"
 	ProjectSection(SolutionItems) = preProject
-		readme.txt = readme.txt
+		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlexiLeaf.Bridge", "FlexiLeaf.Bridge\FlexiLeaf.Bridge.csproj", "{3858BCD4-70DE-4A7B-B415-AAF9ED7BEFD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlexiLeaf.Bridge", "FlexiLeaf.Bridge\FlexiLeaf.Bridge.csproj", "{3858BCD4-70DE-4A7B-B415-AAF9ED7BEFD6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
