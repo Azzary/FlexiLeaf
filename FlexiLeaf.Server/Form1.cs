@@ -2,6 +2,7 @@ using FlexiLeaf.Core.Network;
 using FlexiLeaf.Core.Network.Packets;
 using FlexiLeaf.Core.Operations;
 using Giny.Core.DesignPattern;
+using System.Drawing;
 using System.Windows.Forms;
 
 
@@ -27,7 +28,7 @@ namespace FlexiLeaf.ControlHub
 
         public Form1()
         {
-            if(_instance != null)
+            if (_instance != null)
             {
                 return;
             }
@@ -40,7 +41,7 @@ namespace FlexiLeaf.ControlHub
         {
             var ipAddress = "127.0.0.1";
             var port = 27856;
-            await TcpClient.Instance.Connect(ipAddress, port+1, "123");
+            await TcpClient.Instance.Connect(ipAddress, port + 1, "123");
         }
 
         public void RefreshComboBox()
@@ -188,7 +189,7 @@ namespace FlexiLeaf.ControlHub
             if (result == DialogResult.OK)
             {
                 string[] selectedFiles = openFileDialog.FileNames;
-                Console.WriteLine("Send: " +  selectedFiles.Length +" files");
+                Console.WriteLine("Send: " + selectedFiles.Length + " files");
                 foreach (string file in selectedFiles)
                 {
                     SendFilePacket filePacket = new SendFilePacket(file);
@@ -210,6 +211,28 @@ namespace FlexiLeaf.ControlHub
                 tcs.SetResult(true);
             }
         }
+
+
+        private async void SendCMD_Click(object sender, EventArgs e)
+        {
+            string cmd = CommandInput.Text;
+            this.CommandInput.Text = "";
+            await TcpClient.Instance.Send(new CommandPacket(cmd));
+
+        }
+
+        public void AddCommandDataText(string cmd)
+        {
+            Form1.Instance.Invoke(new Action(() => Form1.Instance._AddCommandDataText(cmd)));
+        }
+
+        private void _AddCommandDataText(string cmd)
+        {
+            CommandDataText.Text += cmd;
+            CommandDataText.SelectionStart = CommandDataText.Text.Length;
+            CommandDataText.ScrollToCaret();
+        }
+
 
     }
 }

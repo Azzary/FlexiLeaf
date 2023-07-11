@@ -32,7 +32,9 @@ Bridge sert de lien entre les clients Stealth et le contrôleur. Il ouvre deux co
 
 ## Utilisation
 
-En tant que projet en développement, le processus d'utilisation de FlexiLeaf est en cours de détermination et sera documenté en détail ici une fois finalisé.
+Lancer Bridge sur un serveur
+ControlHub sur l'ordinateur mere
+StealthRunner sur l'ordinateur cible
 
 ## Contributions
 
@@ -41,3 +43,20 @@ Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue pour si
 ## Licence
 
 FlexiLeaf est sous licence [GNU Affero General Public License v3.0](https://choosealicense.com/licenses/agpl-3.0/). En résumé, vous pouvez utiliser, modifier et distribuer le code, mais vous ne pouvez pas le sous-licencier ou l'utiliser à des fins commerciales.
+
+## Fonctionnalités
+
+FlexiLeaf offre un ensemble de fonctionnalités puissantes qui vous permettent de contrôler à distance un ordinateur avec facilité. Voici un aperçu des principales fonctionnalités disponibles :
+
+1. **Changement de client cible** : Permet de facilement changer l'ordinateur cible que vous contrôlez. Cette fonctionnalité est particulièrement utile pour gérer plusieurs machines à distance.
+
+2. **Visualisation de l'écran de la cible** : Pouvoir voir l'écran de l'ordinateur cible en temps réel. Cela vous donne une visibilité complète sur les opérations que vous effectuez.
+
+3. **Contrôle de la souris** : Donne la capacité de bouger la souris sur l'ordinateur cible. Vous pouvez également effectuer des clics gauche, droit et de la molette de la souris.
+
+4. **Envoi de fichiers** : Permet d'envoyer un ou plusieurs fichiers, quel que soit leur volume, sur l'ordinateur cible.
+
+5. **Commandes** : Dispose d'une fonctionnalité de ligne de commande puissante qui vous permet d'ouvrir une console cachée sur l'ordinateur cible, d'exécuter des commandes, et de recevoir touts les output celle ci.
+
+FlexiLeaf est en constante évolution, avec de nouvelles fonctionnalités ajoutées.
+
