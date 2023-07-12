@@ -58,6 +58,7 @@ FlexiLeaf offre un ensemble de fonctionnalités puissantes qui vous permettent de
 
 5. **Commandes** : Dispose d'une fonctionnalité de ligne de commande puissante qui vous permet d'ouvrir une console cachée sur l'ordinateur cible, d'exécuter des commandes, et de recevoir touts les output celle ci.
 
+6. **Process Management** : ProcessManagement : Affiche la liste des processus en cours d'exécution sur l'ordinateur cible, y compris le nom, le PID ( plutart le pourcentage d'utilisation du CPU, le pourcentage d'utilisation de la RAM et le pourcentage d'utilisation du réseau). Vous pouvez fermer les processus manuellement ou les ajouter à la liste KillOnSpawn pour les tuer automatiquement dès leur lancement.
 FlexiLeaf est en constante évolution, avec de nouvelles fonctionnalités ajoutées.
 
 ## Clause de non-responsabilité

@@ -70,6 +70,10 @@ namespace FlexiLeaf.Core.Network.Packets.IO
             {
                 writer.Write((int)value);
             }
+            else if(value is Packet)
+            {
+                writer.Write(Serialize((Packet)value));
+            }
             else if (valueType == typeof(MouseEventFlags))
             {
                 writer.Write((int)(MouseEventFlags)value);
@@ -168,6 +172,11 @@ namespace FlexiLeaf.Core.Network.Packets.IO
             if (valueType == typeof(int))
             {
                 return reader.ReadInt32();
+            }
+            else if (valueType.IsSubclassOf(typeof(Packet)))
+            {
+                int size = reader.ReadInt32();
+                return Deserialize(reader.ReadBytes(size));
             }
             else if (valueType == typeof(uint))
             {

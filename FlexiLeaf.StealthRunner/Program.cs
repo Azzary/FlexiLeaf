@@ -12,12 +12,10 @@ namespace FlexiLeaf.StealthRunner
             var ipAddress = "127.0.0.1";
             var port = 27856;
 
-            var client = TcpClient.Instance;
-
             await TcpClient.Instance.Connect(ipAddress, port, "");
             while (true)
             {
-                Console.ReadKey();
+                await Task.Delay(int.MaxValue);
             }
         }
     }
