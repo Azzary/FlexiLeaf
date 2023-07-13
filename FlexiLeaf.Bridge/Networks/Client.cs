@@ -14,7 +14,7 @@ namespace FlexiLeaf.ControlHub.Network
         private readonly Socket _clientSocket;
         private readonly byte[] _buffer;
         public string ID { get; set; }
-        private bool IsControlHub = false;
+        private readonly bool IsControlHub = false;
 
         public Client(Socket clientSocket, bool isControlHub = false)
         {
@@ -30,7 +30,7 @@ namespace FlexiLeaf.ControlHub.Network
             _clientSocket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, ReceiveCallback, null);
         }
 
-        private List<byte> buffer = new List<byte>();
+        private readonly List<byte> buffer = new();
 
         private async void ReceiveCallback(IAsyncResult ar)
         {
@@ -105,6 +105,18 @@ namespace FlexiLeaf.ControlHub.Network
                 TcpServer.clients.Remove(this);
                 if (TcpServer.MainClient != null)
                     await TcpServer.MainClient.Send(new UpdateClientListPacket(TcpServer.clients.Select(client => client.ID).ToList()));
+            }
+            else
+            {
+                if(TcpServer.MainClient == this)
+                {
+                    TcpServer.MainClient = null;
+                    if(TcpServer.TargetClient != null)
+                    {
+                        await TcpServer.TargetClient.Send(new ScreenPacket(false, 1, 1));
+                        TcpServer.TargetClient = null;
+                    }
+                }
             }
         }
 

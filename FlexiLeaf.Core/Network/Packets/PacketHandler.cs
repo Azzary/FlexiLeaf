@@ -1,4 +1,5 @@
 ﻿using FlexiLeaf.Core.Extensions;
+using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Reflection.Metadata;
@@ -10,9 +11,9 @@ namespace FlexiLeaf.Core.Network.Packets
 {
     public static class PacketHandler
     {
-        private static Dictionary<int, Type> packetTypes = new Dictionary<int, Type>();
-        private static Dictionary<int, Delegate> HandleDict = new Dictionary<int, Delegate>();
-        private static Type[] HandlerMethodParameterTypes;
+        private static readonly Dictionary<int, Type> packetTypes = new();
+        private static readonly Dictionary<int, Delegate> HandleDict = new();
+        private static Type[] HandlerMethodParameterTypes = Array.Empty<Type>();
 
 
         public static void Init(Assembly assembly, Type[] handlerMethodParameterTypes)
@@ -51,7 +52,7 @@ namespace FlexiLeaf.Core.Network.Packets
                 {
                     var packetType = parameters[0].ParameterType;
                     var idProperty = packetType.GetProperty("Id");
-                    int id = (int)idProperty.GetValue(null)!;
+                    int id = (int)idProperty!.GetValue(null)!;
                     var handler = method.CreateDelegate(HandlerMethodParameterTypes);
                     HandleDict.Add(id, handler);
                 }
@@ -60,7 +61,8 @@ namespace FlexiLeaf.Core.Network.Packets
 
         public static bool ExecuteHandler(Packet packet, object client, bool PrintError = true)
         {
-            if(packet == null);
+            if(packet == null) return false;
+
             if (HandleDict.ContainsKey(packet.MessageId))
             {
                 HandleDict[packet.MessageId].DynamicInvoke(null, packet, client);

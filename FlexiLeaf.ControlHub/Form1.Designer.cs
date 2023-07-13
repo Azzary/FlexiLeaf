@@ -35,16 +35,8 @@ namespace FlexiLeaf.ControlHub
             components = new System.ComponentModel.Container();
             comboBoxClients = new ComboBox();
             tcpServerBindingSource = new BindingSource(components);
-            pictureBox1 = new PictureBox();
-            ShowScreen = new CheckBox();
-            MouseMove = new CheckBox();
-            SendFiles = new Button();
             SendCMD = new Button();
             tabControl = new TabControl();
-            Screen = new TabPage();
-            Files = new TabPage();
-            FileExplorer = new TreeView();
-            TargetFolderFile = new TextBox();
             Commands = new TabPage();
             CommandDataText = new TextBox();
             CommandInput = new TextBox();
@@ -72,12 +64,8 @@ namespace FlexiLeaf.ControlHub
             contextMenuStripKillOnSpawn = new ContextMenuStrip(components);
             removeMenuItem = new ToolStripMenuItem();
             label4 = new Label();
-            CreateNewFolder = new Button();
             ((System.ComponentModel.ISupportInitialize)tcpServerBindingSource).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             tabControl.SuspendLayout();
-            Screen.SuspendLayout();
-            Files.SuspendLayout();
             Commands.SuspendLayout();
             ProcessManagement.SuspendLayout();
             tabControlProcessGestion.SuspendLayout();
@@ -99,52 +87,6 @@ namespace FlexiLeaf.ControlHub
             comboBoxClients.ValueMember = "ID";
             comboBoxClients.SelectedIndexChanged += comboBoxClients_SelectedIndexChanged;
             // 
-            // pictureBox1
-            // 
-            pictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            pictureBox1.Location = new Point(-4, 28);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(776, 378);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 1;
-            pictureBox1.TabStop = false;
-            pictureBox1.MouseDown += pictureBox1_MouseDown;
-            pictureBox1.MouseMove += pictureBox1_MouseMove;
-            pictureBox1.MouseUp += pictureBox1_MouseUp;
-            // 
-            // ShowScreen
-            // 
-            ShowScreen.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            ShowScreen.AutoSize = true;
-            ShowScreen.Location = new Point(6, 3);
-            ShowScreen.Name = "ShowScreen";
-            ShowScreen.Size = new Size(93, 19);
-            ShowScreen.TabIndex = 2;
-            ShowScreen.Text = "Show Screen";
-            ShowScreen.UseVisualStyleBackColor = true;
-            ShowScreen.CheckedChanged += checkBox1_CheckedChanged;
-            // 
-            // MouseMove
-            // 
-            MouseMove.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            MouseMove.AutoSize = true;
-            MouseMove.Location = new Point(105, 3);
-            MouseMove.Name = "MouseMove";
-            MouseMove.Size = new Size(95, 19);
-            MouseMove.TabIndex = 3;
-            MouseMove.Text = "Mouse Move";
-            MouseMove.UseVisualStyleBackColor = true;
-            // 
-            // SendFiles
-            // 
-            SendFiles.Location = new Point(11, 17);
-            SendFiles.Name = "SendFiles";
-            SendFiles.Size = new Size(99, 23);
-            SendFiles.TabIndex = 4;
-            SendFiles.Text = "Send Files";
-            SendFiles.UseVisualStyleBackColor = true;
-            SendFiles.Click += SendFiles_Click;
-            // 
             // SendCMD
             // 
             SendCMD.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
@@ -159,8 +101,8 @@ namespace FlexiLeaf.ControlHub
             // tabControl
             // 
             tabControl.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            tabControl.Controls.Add(Screen);
-            tabControl.Controls.Add(Files);
+            tabControl.Controls.Add(ScreenTab);
+            tabControl.Controls.Add(FilesTab);
             tabControl.Controls.Add(Commands);
             tabControl.Controls.Add(ProcessManagement);
             tabControl.Location = new Point(-3, 32);
@@ -170,48 +112,8 @@ namespace FlexiLeaf.ControlHub
             tabControl.TabIndex = 6;
             tabControl.SelectedIndexChanged += TabControl_SelectedIndexChanged;
             tabControl.Deselecting += TabControl_Deselecting;
-            // 
-            // Screen
-            // 
-            Screen.Controls.Add(pictureBox1);
-            Screen.Controls.Add(ShowScreen);
-            Screen.Controls.Add(MouseMove);
-            Screen.Location = new Point(4, 24);
-            Screen.Name = "Screen";
-            Screen.Padding = new Padding(3);
-            Screen.Size = new Size(767, 390);
-            Screen.TabIndex = 0;
-            Screen.Text = "Screen";
-            Screen.UseVisualStyleBackColor = true;
-            // 
-            // Files
-            // 
-            Files.Controls.Add(CreateNewFolder);
-            Files.Controls.Add(FileExplorer);
-            Files.Controls.Add(TargetFolderFile);
-            Files.Controls.Add(SendFiles);
-            Files.Location = new Point(4, 24);
-            Files.Name = "Files";
-            Files.Padding = new Padding(3);
-            Files.Size = new Size(767, 390);
-            Files.TabIndex = 1;
-            Files.Text = "Files";
-            Files.UseVisualStyleBackColor = true;
-            // 
-            // FileExplorer
-            // 
-            FileExplorer.Location = new Point(6, 46);
-            FileExplorer.Name = "FileExplorer";
-            FileExplorer.Size = new Size(755, 338);
-            FileExplorer.TabIndex = 6;
-            FileExplorer.NodeMouseClick += FileExplorer_NodeMouseClick;
-            // 
-            // TargetFolderFile
-            // 
-            TargetFolderFile.Location = new Point(116, 17);
-            TargetFolderFile.Name = "TargetFolderFile";
-            TargetFolderFile.Size = new Size(258, 23);
-            TargetFolderFile.TabIndex = 5;
+
+
             // 
             // Commands
             // 
@@ -456,16 +358,6 @@ namespace FlexiLeaf.ControlHub
             label4.TabIndex = 7;
             label4.Text = "Client:";
             // 
-            // CreateNewFolder
-            // 
-            CreateNewFolder.Location = new Point(380, 17);
-            CreateNewFolder.Name = "CreateNewFolder";
-            CreateNewFolder.Size = new Size(132, 23);
-            CreateNewFolder.TabIndex = 7;
-            CreateNewFolder.Text = "Create New Folder";
-            CreateNewFolder.UseVisualStyleBackColor = true;
-            CreateNewFolder.Click += CreateNewFolder_Click;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -477,12 +369,8 @@ namespace FlexiLeaf.ControlHub
             Name = "Form1";
             Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)tcpServerBindingSource).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             tabControl.ResumeLayout(false);
-            Screen.ResumeLayout(false);
-            Screen.PerformLayout();
-            Files.ResumeLayout(false);
-            Files.PerformLayout();
+
             Commands.ResumeLayout(false);
             Commands.PerformLayout();
             ProcessManagement.ResumeLayout(false);
@@ -497,16 +385,15 @@ namespace FlexiLeaf.ControlHub
         }
 
         #endregion
+        public Interfaces.TabPages.ScreenTab.ScreenTab ScreenTab = new();
+        public Interfaces.TabPages.FilesTab.FilesTab FilesTab = new();
+
+
         private ComboBox comboBoxClients;
         private BindingSource tcpServerBindingSource;
-        private PictureBox pictureBox1;
-        private CheckBox ShowScreen;
-        private CheckBox MouseMove;
-        private Button SendFiles;
+
         private Button SendCMD;
         private TabControl tabControl;
-        private TabPage Screen;
-        private TabPage Files;
         private TabPage Commands;
         private TextBox CommandInput;
         private TextBox CommandDataText;
@@ -534,8 +421,5 @@ namespace FlexiLeaf.ControlHub
         private Label label3;
         private TextBox NameOfNewKillOnSpawn;
         private Label label4;
-        private TextBox TargetFolderFile;
-        private TreeView FileExplorer;
-        private Button CreateNewFolder;
     }
 }

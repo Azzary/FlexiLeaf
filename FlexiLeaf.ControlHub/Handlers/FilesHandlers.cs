@@ -1,10 +1,6 @@
 ﻿using FlexiLeaf.Core.Network;
 using FlexiLeaf.Core.Network.Packets;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace FlexiLeaf.ControlHub.Handlers
 {
@@ -14,7 +10,7 @@ namespace FlexiLeaf.ControlHub.Handlers
         [PacketHandler]
         public async static void FileExplorer(FileExplorerPacket packet, TcpClient Client)
         {
-            Form1.Instance.UpdateFileExplorer(packet);
+            Form1.Instance.FilesTab.UpdateFileExplorer(packet);
         }
 
         //[PacketHandler]

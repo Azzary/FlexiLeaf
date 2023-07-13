@@ -35,7 +35,7 @@ namespace FlexiLeaf.Core.Network
             _clientSocket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, ReceiveCallback, null);
         }
 
-        private List<byte> buffer = new List<byte>();
+        private readonly List<byte> buffer = new();
 
         private void ReceiveCallback(IAsyncResult ar)
         {

@@ -16,7 +16,7 @@ namespace FlexiLeaf.ControlHub.Handlers
             if (packet.ShowScreen == true)
             {
                 var bitmap = ScreenPacket.ByteArrayToBitmap(packet.ImageArray);
-                Form1.Instance.ChangeImage(bitmap);
+                Form1.Instance.ScreenTab.ChangeImage(bitmap);
             }
         }
     }

