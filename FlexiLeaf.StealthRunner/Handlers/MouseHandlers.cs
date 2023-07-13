@@ -13,9 +13,8 @@ namespace FlexiLeaf.StealthRunner.Handlers
     internal class MouseHandlers
     {
         [PacketHandler]
-        public async static void Click(MousePacket packet, TcpClient client)
+        public static void Click(MousePacket packet, TcpClient client)
         {
-            await Task.Delay(4000);
             MouseOperations.SetCursorPosition(packet.X, packet.Y);
             if (packet.MouseEvent != MouseEventFlags.Move)
             {

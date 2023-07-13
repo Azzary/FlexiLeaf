@@ -24,6 +24,7 @@ namespace FlexiLeaf.Core.Network.Packets
         public int TotalChunk { get; set; } = 0;
         public byte[] Data { get; set; }
         public string FilePath { get; set; }
+        public string TargetDirectory { get; set; }
 
         public bool ReadFileInChunks()
         {
@@ -56,7 +57,7 @@ namespace FlexiLeaf.Core.Network.Packets
         public async void WriteFileFromChunks()
         {
             string fileName = Path.GetFileName(FilePath);
-            string path = "C:\\Users\\remic\\Desktop\\test\\" + fileName;
+            string path = Path.Combine(TargetDirectory, fileName);
             fileMutex.WaitOne();
             try
             {

@@ -48,20 +48,29 @@ FlexiLeaf est sous licence [GNU Affero General Public License v3.0](https://choo
 
 FlexiLeaf offre un ensemble de fonctionnalités puissantes qui vous permettent de contrôler à distance un ordinateur avec facilité. Voici un aperçu des principales fonctionnalités disponibles :
 
-1. **Changement de client cible** : Permet de facilement changer l'ordinateur cible que vous contrôlez. Cette fonctionnalité est particulièrement utile pour gérer plusieurs machines à distance.
+1. **Changement de client cible** : Permet de changer facilement l'ordinateur cible que vous contrôlez. Cette fonctionnalité est particulièrement utile pour gérer plusieurs machines à distance.
 
-2. **Visualisation de l'écran de la cible** : Pouvoir voir l'écran de l'ordinateur cible en temps réel. Cela vous donne une visibilité complète sur les opérations que vous effectuez.
+2. **Visualisation de l'écran de la cible** : Vous permet de voir l'écran de l'ordinateur cible en temps réel. Cela vous offre une visibilité complète sur les opérations que vous effectuez.
 
-3. **Contrôle de la souris** : Donne la capacité de bouger la souris sur l'ordinateur cible. Vous pouvez également effectuer des clics gauche, droit et de la molette de la souris.
+3. **Contrôle de la souris** : Donne la capacité de déplacer la souris sur l'ordinateur cible. Vous pouvez également effectuer des clics gauche, droit et avec la molette de la souris.
 
-4. **Envoi de fichiers** : Permet d'envoyer un ou plusieurs fichiers, quel que soit leur volume, sur l'ordinateur cible.
+4. **Gestionnaire de fichiers** : Cette fonctionnalité vous permet de naviguer dans la structure de fichiers de l'ordinateur cible. Vous pouvez créer de nouveaux dossiers et envoyer des fichiers à l'ordinateur cible. Il affiche également la structure de l'arborescence des dossiers et fichiers pour une navigation facile.
 
-5. **Commandes** : Dispose d'une fonctionnalité de ligne de commande puissante qui vous permet d'ouvrir une console cachée sur l'ordinateur cible, d'exécuter des commandes, et de recevoir touts les output celle ci.
+5. **Commandes** : Dispose d'une fonctionnalité de ligne de commande puissante qui vous permet d'ouvrir une console cachée sur l'ordinateur cible, d'exécuter des commandes, et de recevoir tous les outputs de celle-ci.
 
-6. **Process Management** : ProcessManagement : Affiche la liste des processus en cours d'exécution sur l'ordinateur cible, y compris le nom, le PID ( plutart le pourcentage d'utilisation du CPU, le pourcentage d'utilisation de la RAM et le pourcentage d'utilisation du réseau). Vous pouvez fermer les processus manuellement ou les ajouter à la liste KillOnSpawn pour les tuer automatiquement dès leur lancement.
-FlexiLeaf est en constante évolution, avec de nouvelles fonctionnalités ajoutées.
+6. **Gestion des processus** : Affiche la liste des processus en cours d'exécution sur l'ordinateur cible, y compris le nom, le PID et plus tard le pourcentage d'utilisation du CPU, le pourcentage d'utilisation de la RAM et le pourcentage d'utilisation du réseau. Vous pouvez fermer les processus manuellement ou les ajouter à la liste KillOnSpawn pour les tuer automatiquement dès leur lancement.
+
+## To-Do Liste
+
+1. **Gestionnaire de fichiers - Clic droit** : Ajouter un menu contextuel (clic droit) dans le gestionnaire de fichiers. Ce menu doit offrir les options pour supprimer, renommer, etc. un fichier sélectionné.
+
+2. **Récupération de fichiers** : Ajouter une fonctionnalité permettant de récupérer des fichiers présents sur l'ordinateur cible. Cette fonctionnalité devrait permettre de télécharger des fichiers de l'ordinateur cible vers l'ordinateur hôte.
+
+3. **Capture d'écran - Qualité du streaming** : Pour la fonctionnalité de capture d'écran, ajouter la possibilité de régler la qualité du streaming. Cela pourrait inclure des réglages pour le taux de rafraîchissement (frame rate) et la qualité de l'écran (résolution, profondeur de couleur, etc.).
 
 ## Clause de non-responsabilité
 
 Veuillez noter que l'utilisation de ce logiciel est à vos propres risques. L'auteur ne peut être tenu responsable des dommages ou préjudices découlant de l'utilisation de ce logiciel. Bien que tous les efforts aient été faits pour garantir la fiabilité et l'exactitude de ce logiciel, l'auteur ne fait aucune déclaration ni garantie quant à son utilité ou son adéquation à un usage particulier.
 Il est recommandé d'utiliser ce logiciel conformément aux lois en vigueur et de respecter les droits d'autrui. L'auteur décline toute responsabilité pour toute utilisation abusive, illégale ou non autorisée de ce logiciel.
+
+

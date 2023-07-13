@@ -1,3 +1,4 @@
+using FlexiLeaf.ControlHub.Interfaces;
 using FlexiLeaf.Core.Network;
 using FlexiLeaf.Core.Network.Packets;
 using FlexiLeaf.Core.Operations;
@@ -33,14 +34,110 @@ namespace FlexiLeaf.ControlHub
             _instance = this;
             InitializeComponent();
             this.Load += Form1_Load;
+            this.FileExplorer.AfterExpand += new TreeViewEventHandler(this.FileExplorer_AfterCollapse);
+        }
+
+        private async void FileExplorer_AfterCollapse(object sender, TreeViewEventArgs e)
+        {
+            // Vérifie si le noeud a été refermé
+            if (e.Node.IsExpanded)
+            {
+                var nodePath = ((string)e.Node.Tag).Replace("TreeNode: ", ""); // Suppose que le chemin d'accès est stocké dans le Tag du TreeNode
+                await TcpClient.Instance.Send(new FileExplorerPacket(nodePath));
+            }
         }
 
         private async void Form1_Load(object sender, EventArgs e)
         {
-            var ipAddress = "127.0.0.1";
-            var port = 27856;
-            await TcpClient.Instance.Connect(ipAddress, port + 1, "123");
+            await TcpClient.Instance.Connect(AppSettings.Instance.IPAddress, AppSettings.Instance.Port, AppSettings.Instance.Password);
         }
+
+        private async void FileExplorer_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Node.Nodes.Count == 0)
+            {
+                var nodePath = ((string)e.Node.Tag).Replace("TreeNode: ", ""); // Suppose que le chemin d'accès est stocké dans le Tag du TreeNode
+                await TcpClient.Instance.Send(new FileExplorerPacket(nodePath));
+            }
+            TargetFolderFile.Text = ((string)e.Node.Tag).Replace("TreeNode: ", "");
+        }
+
+
+        public void UpdateFileExplorer(FileExplorerPacket packet)
+        {
+            Form1.Instance.Invoke(new Action(() =>
+            {
+                Form1.Instance._UpdateFileExplorer(packet);
+            }));
+        }
+        private void _UpdateFileExplorer(FileExplorerPacket packet)
+        {
+            var parentNode = FindTreeNodeByPath(packet.CurrentPath, FileExplorer.Nodes);
+
+            if (parentNode == null)
+            {
+                foreach (var file in packet.Files)
+                {
+                    // Create a new TreeNode
+                    var node = new TreeNode(file.Name);
+
+                    // If the file is actually a directory, make it bold
+                    if (file.IsFolder)
+                    {
+                        node.NodeFont = new Font(FileExplorer.Font, FontStyle.Bold);
+                    }
+                    node.Tag = file.Name;
+                    // Add the TreeNode to the TreeView
+                    FileExplorer.Nodes.Add(node);
+                }
+            }
+            else // parentNode is not null, so we add to it
+            {
+                parentNode.Nodes.Clear();
+                packet.SortFiles();
+                foreach (var file in packet.Files)
+                {
+                    // Create a new TreeNode
+                    var node = new TreeNode(file.Name);
+
+                    // If the file is actually a directory, make it bold
+                    if (file.IsFolder)
+                    {
+                        node.NodeFont = new Font(FileExplorer.Font, FontStyle.Bold);
+                        node.Tag = packet.CurrentPath + file.Name + @"\";
+                    }
+                    else
+                    {
+                        node.Tag = packet.CurrentPath + file.Name;
+                    }
+                    Console.WriteLine(node.Tag.ToString());
+                    // Add the TreeNode to the parentNode
+                    parentNode.Nodes.Add(node);
+                }
+                parentNode.Expand();
+            }
+        }
+
+        private TreeNode FindTreeNodeByPath(string path, TreeNodeCollection nodes)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                if (((string)node.Tag).Replace("TreeNode: ", "") == path) // Supposons que le chemin d'accès est stocké dans le Tag du TreeNode
+                {
+                    return node;
+                }
+
+                TreeNode foundNode = FindTreeNodeByPath(path, node.Nodes);
+                if (foundNode != null) // Noeud trouvé dans les sous-noeuds
+                {
+                    return foundNode;
+                }
+            }
+
+            return null; // Aucun noeud correspondant trouvé
+        }
+
+
 
         public void RefreshComboBox()
         {
@@ -147,7 +244,7 @@ namespace FlexiLeaf.ControlHub
 
         private void GetScreenMousePosition(MouseEventArgs e, ref int X, ref int Y)
         {
-            if (!ShowScreen.Checked)
+            if (!ShowScreen.Checked || pictureBox1.Image == null)
                 return;
             Point clickCoordinates = e.Location;
             int xImage = clickCoordinates.X;
@@ -175,9 +272,9 @@ namespace FlexiLeaf.ControlHub
 
         }
 
-        private static TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
+        private TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
 
-        private async static void ThreadMethod()
+        private async void ThreadMethod()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Multiselect = true;
@@ -191,6 +288,7 @@ namespace FlexiLeaf.ControlHub
                 foreach (string file in selectedFiles)
                 {
                     SendFilePacket filePacket = new SendFilePacket(file);
+                    filePacket.TargetDirectory = TargetFolderFile.Text;
                     while (!filePacket.ReadFileInChunks())
                     {
                         await TcpClient.Instance.Send(filePacket);
@@ -198,15 +296,6 @@ namespace FlexiLeaf.ControlHub
                     }
                     await TcpClient.Instance.Send(filePacket);
                 }
-            }
-        }
-
-        [PacketHandler]
-        public static void HandleSendFilePacket(SendFilePacket packet, TcpClient Client)
-        {
-            if (!tcs.Task.IsCompleted)
-            {
-                tcs.SetResult(true);
             }
         }
 
@@ -368,7 +457,7 @@ namespace FlexiLeaf.ControlHub
 
 
         private bool LoopUpdateProcess = false;
-        private void TabControl_SelectedIndexChanged(object sender, EventArgs e)
+        private async void TabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (tabControl.SelectedTab == this.ProcessManagement)
             {
@@ -381,6 +470,13 @@ namespace FlexiLeaf.ControlHub
                         await Task.Delay(1000);
                     }
                 });
+            }
+            if (tabControl.SelectedTab == this.Files)
+            {
+                if (FileExplorer.Nodes.Count == 0)
+                {
+                    await TcpClient.Instance.Send(new FileExplorerPacket(""));
+                }
             }
         }
 
@@ -441,5 +537,18 @@ namespace FlexiLeaf.ControlHub
             }
             await TcpClient.Instance.Send(new KillProcessOnSpawn(KillsOnSpawns));
         }
+
+        private async void CreateNewFolder_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new InputBox("New Folder Name"))
+            {
+                if (dialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    string folderName = dialog.InputText;
+                    await TcpClient.Instance.Send(new CreateFolderPacket(TargetFolderFile.Text, folderName));
+                }
+            }
+        }
+
     }
 }

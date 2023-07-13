@@ -22,7 +22,7 @@ namespace FlexiLeaf.Core.Network
             _buffer = new byte[BufferSize];
         }
 
-        public async Task Connect(string ipAddress, int port, string password)
+        public async Task Connect(string ipAddress, int port, string password = "")
         {
             var ipEndpoint = new IPEndPoint(IPAddress.Parse(ipAddress), port);
             await _clientSocket.ConnectAsync(ipEndpoint);

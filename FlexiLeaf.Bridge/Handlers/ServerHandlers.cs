@@ -20,7 +20,7 @@ namespace FlexiLeaf.Bridge.Handlers
         [PacketHandler]
         public async static void login(LoginPacket packet, Client client)
         {
-            if (packet.Password == "123")
+            if (packet.Password == AppSettings.Instance.Password)
             {
                 if (TcpServer.MainClient != null)
                 {

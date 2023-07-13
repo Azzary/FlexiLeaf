@@ -9,10 +9,8 @@ namespace FlexiLeaf.StealthRunner
         static async Task Main()
         {
             PacketHandler.Init(Assembly.GetExecutingAssembly(), new Type[] { typeof(Packet), typeof(TcpClient) });
-            var ipAddress = "127.0.0.1";
-            var port = 27856;
-
-            await TcpClient.Instance.Connect(ipAddress, port, "");
+            AppSettings.Instance.LoadConfiguration();
+            await TcpClient.Instance.Connect(AppSettings.Instance.IPAddress, AppSettings.Instance.Port, "");
             while (true)
             {
                 await Task.Delay(int.MaxValue);

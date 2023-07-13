@@ -43,6 +43,8 @@ namespace FlexiLeaf.ControlHub
             tabControl = new TabControl();
             Screen = new TabPage();
             Files = new TabPage();
+            FileExplorer = new TreeView();
+            TargetFolderFile = new TextBox();
             Commands = new TabPage();
             CommandDataText = new TextBox();
             CommandInput = new TextBox();
@@ -70,6 +72,7 @@ namespace FlexiLeaf.ControlHub
             contextMenuStripKillOnSpawn = new ContextMenuStrip(components);
             removeMenuItem = new ToolStripMenuItem();
             label4 = new Label();
+            CreateNewFolder = new Button();
             ((System.ComponentModel.ISupportInitialize)tcpServerBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             tabControl.SuspendLayout();
@@ -134,9 +137,9 @@ namespace FlexiLeaf.ControlHub
             // 
             // SendFiles
             // 
-            SendFiles.Location = new Point(11, 6);
+            SendFiles.Location = new Point(11, 17);
             SendFiles.Name = "SendFiles";
-            SendFiles.Size = new Size(113, 31);
+            SendFiles.Size = new Size(99, 23);
             SendFiles.TabIndex = 4;
             SendFiles.Text = "Send Files";
             SendFiles.UseVisualStyleBackColor = true;
@@ -183,6 +186,9 @@ namespace FlexiLeaf.ControlHub
             // 
             // Files
             // 
+            Files.Controls.Add(CreateNewFolder);
+            Files.Controls.Add(FileExplorer);
+            Files.Controls.Add(TargetFolderFile);
             Files.Controls.Add(SendFiles);
             Files.Location = new Point(4, 24);
             Files.Name = "Files";
@@ -191,6 +197,21 @@ namespace FlexiLeaf.ControlHub
             Files.TabIndex = 1;
             Files.Text = "Files";
             Files.UseVisualStyleBackColor = true;
+            // 
+            // FileExplorer
+            // 
+            FileExplorer.Location = new Point(6, 46);
+            FileExplorer.Name = "FileExplorer";
+            FileExplorer.Size = new Size(755, 338);
+            FileExplorer.TabIndex = 6;
+            FileExplorer.NodeMouseClick += FileExplorer_NodeMouseClick;
+            // 
+            // TargetFolderFile
+            // 
+            TargetFolderFile.Location = new Point(116, 17);
+            TargetFolderFile.Name = "TargetFolderFile";
+            TargetFolderFile.Size = new Size(258, 23);
+            TargetFolderFile.TabIndex = 5;
             // 
             // Commands
             // 
@@ -435,6 +456,16 @@ namespace FlexiLeaf.ControlHub
             label4.TabIndex = 7;
             label4.Text = "Client:";
             // 
+            // CreateNewFolder
+            // 
+            CreateNewFolder.Location = new Point(380, 17);
+            CreateNewFolder.Name = "CreateNewFolder";
+            CreateNewFolder.Size = new Size(132, 23);
+            CreateNewFolder.TabIndex = 7;
+            CreateNewFolder.Text = "Create New Folder";
+            CreateNewFolder.UseVisualStyleBackColor = true;
+            CreateNewFolder.Click += CreateNewFolder_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -451,6 +482,7 @@ namespace FlexiLeaf.ControlHub
             Screen.ResumeLayout(false);
             Screen.PerformLayout();
             Files.ResumeLayout(false);
+            Files.PerformLayout();
             Commands.ResumeLayout(false);
             Commands.PerformLayout();
             ProcessManagement.ResumeLayout(false);
@@ -502,5 +534,8 @@ namespace FlexiLeaf.ControlHub
         private Label label3;
         private TextBox NameOfNewKillOnSpawn;
         private Label label4;
+        private TextBox TargetFolderFile;
+        private TreeView FileExplorer;
+        private Button CreateNewFolder;
     }
 }
