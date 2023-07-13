@@ -221,6 +221,8 @@ namespace FlexiLeaf.ControlHub.Interfaces.TabPages.ScreenTab
         {
             if (!ShowScreen.Checked || pictureBox1.Image == null)
                 return;
+            int quality = Form1.Instance.ScreenTab.Quality;
+
             Point clickCoordinates = e.Location;
             int xImage = clickCoordinates.X;
             int yImage = clickCoordinates.Y;
@@ -234,8 +236,9 @@ namespace FlexiLeaf.ControlHub.Interfaces.TabPages.ScreenTab
             float widthDifference = screenWidth / imageWidth;
             float heightDifference = screenHeight / imageHeight;
 
-            X = (int)(xImage * widthDifference);
-            Y = (int)(yImage * heightDifference);
+            float scaleFactor = 100f / quality;
+            X = (int)(xImage * widthDifference * scaleFactor);
+            Y = (int)(yImage * heightDifference * scaleFactor);
         }
 
         private async void checkBox1_CheckedChanged(object sender, EventArgs e)
